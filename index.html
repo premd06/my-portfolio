@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+  <meta charset = "UTF-8" />
+  <meta name = "viewport" content = "width=device-width, initial-scale=1.0" />
+  <title>Prem D | Portfolio</title>
+
+  <!-- I Used Google Fonts, In This Case Poppins Style -->
+  <link href = "https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel = "stylesheet" />
+
+  <!-- This Is The External CSS File -->
+  <link rel = "stylesheet" href = "style.css" />
+</head>
+<body>
+
+  <!-- This Is The Background of Stars, a Canvas Element -->
+  <canvas id = "starfield" aria-hidden = "true"></canvas>
+
+  <!-- Top Section, Header -->
+  <header>
+    <div class = "logo-container">
+      <h1>Prem. D</h1>
+    </div>
+
+    <p class = "subtitle">
+      Computer Science | Toronto Metropolitan University
+    </p>
+
+    <!-- Navigation Menu -->
+    <nav>
+      <ul>
+        <li><a href = "index.html" class = "active" > Home</a></li>
+        <li><a href = "https://github.com/premd06" target = "_blank" > Projects</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- Big Intro Section -->
+    <section class = "banner">
+      <div class = "content">
+        <h2>Seeking Talent, Passion, & Teamwork?</h2>
+        <h3>Look No Further.</h3>
+        <p>
+        I thrive in collaborative environments, continuously pursuing growth, and building
+        relationships that contribute to workplace success.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section with 3 Cards (About, Certificates, Contact) -->
+    <section class = "content-grid">
+
+      <!-- Card 1: About Me -->
+      <div class = "content-card">
+        <img src = "images/tmu_circular_icon.png" alt = "University Icon" class = "card-image" />
+        <h3>About Me</h3>
+        <p>
+        Hi, I'm Prem, a second-year student majoring in Computer Science at Toronto Metropolitan University, 
+        and I'm working towards a minor in Cyber Studies. I enjoy participating in hackathons, organizing 
+        workshops with the Cyber Security Club, and actively contributing to tech initiatives on campus.
+        </p>
+      </div>
+
+      <!-- Card 2: Certificates -->
+      <div class = "content-card">
+        <img src = "https://cdn-icons-png.flaticon.com/512/1046/1046441.png" alt = "Certificates Icon" class = "card-image" />
+        <h3>Certificates</h3>
+        <p>
+        I have earned several certifications to enhance my skills. Find them on my LinkedIn
+        - @premdave06, under “Licenses & Certifications," or press the “View Certificates” button below.
+        </p>
+        <a href = "https://www.linkedin.com/in/daveprem06" target = "_blank" class = "cta-link">
+          View Certificates
+        </a>
+      </div>
+
+      <!-- Card 3: Contact -->
+      <div class = "content-card">
+        <img src = "https://cdn-icons-png.freepik.com/512/1049/1049876.png" alt = "Contact Icon" class = "card-image" />
+        <h3>Contact Me</h3>
+        <p>If you have questions or just want to connect, reach out below:</p>
+
+        <!-- Email Link -->
+        <a href = "https://mail.google.com/mail/?view=cm&fs=1&to=daveprem06@gmail.com" target = "_blank" class = "contact-icon-link">
+          <img src = "https://cdn-icons-png.flaticon.com/512/281/281769.png" alt = "Email Icon" class = "contact-icon" />
+        </a>
+
+        <!-- LinkedIn Link -->
+        <a href = "https://www.linkedin.com/in/daveprem06/" target = "_blank" class = "contact-icon-link">
+          <img src = "https://cdn-icons-png.flaticon.com/512/174/174857.png" alt = "LinkedIn Icon" class = "contact-icon" />
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer (Bottom Section) -->
+  <footer>
+    <div class = "footer-content">
+      <img src = "https://cdn-icons-png.flaticon.com/512/25/25231.png" alt = "GitHub Logo" class = "footer-logo-img" />
+      <div class = "footer-text" > &copy; 2025 Prem. D — Portfolio</div>
+    </div>
+  </footer>
+
+  <!-- This is How I Make The Moving Star Background -->
+<script>
+  
+
+  // This Is Starting THe Star Animation
+  (function() {
+
+    // Gets The Canvas Element & The Drawing Context
+    var starCanvas = document.getElementById("starfield");
+    var draw = starCanvas.getContext("2d");
+
+    // Handles High-DPI Screens
+    var pixelRatio = window.devicePixelRatio || 1;
+
+    var canvasWidth, canvasHeight;
+
+    // Function To Resize Canvas
+    function resizeCanvas() {
+      canvasWidth = window.innerWidth;
+      canvasHeight = window.innerHeight;
+
+      starCanvas.width = canvasWidth * pixelRatio;
+      starCanvas.height = canvasHeight * pixelRatio;
+
+      starCanvas.style.width = canvasWidth + "px";
+      starCanvas.style.height = canvasHeight + "px";
+
+      draw.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    }
+
+    // Resize Canvas When Window Changes Size
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Creates The Stars
+    var numberOfStars = 250;
+    var starsArray = [];
+
+    for (var i = 0; i < numberOfStars; i++) {
+      starsArray.push({
+        x: Math.random() * canvasWidth,
+        y: Math.random() * canvasHeight,
+        radius: Math.random() * 1.5, // Size of Stars
+        speed: Math.random() * 3, // How Fast It Moves Up
+        brightness: Math.random() * 1.2, // Brightness
+        twinklePhase: Math.random() * Math.PI * 2 // Twinkle Effect
+      });
+    }
+
+    // Draws Stars
+    function animateStars() {
+      // Clears Canvas
+      draw.clearRect(0, 0, canvasWidth, canvasHeight);
+
+   
+      for (var i = 0; i < starsArray.length; i++) {
+        var star = starsArray[i];
+
+        // Move Star Up
+        star.y -= star.speed;
+
+        // Resets Star to Bottom When It Gets to The Top
+        if (star.y < -2) {
+          star.y = canvasHeight + 2;
+          star.x = Math.random() * canvasWidth;
+        }
+
+        // Twinkle Effect
+        star.twinklePhase += 0.02;
+        var alpha = star.brightness * (1.2 * Math.sin(star.twinklePhase));
+        draw.globalAlpha = alpha;
+
+        draw.beginPath();
+        draw.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        draw.fillStyle = "#fff";
+        draw.fill();
+      }
+
+      draw.globalAlpha = 1;
+
+      requestAnimationFrame(animateStars);
+    }
+
+    // Starts Animation
+    animateStars();
+
+  })();
+</script>
